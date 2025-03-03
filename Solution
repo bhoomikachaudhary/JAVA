@@ -1,0 +1,60 @@
+java.util.*;
+
+class Solution {
+    public int[] pivotArray(int[] nums, int pivot) {
+        int n = nums.length;
+        int[] result = new int[n];
+        int left = 0, pivotCount = 0;
+        
+        // Pehla loop: Chhoti values + Pivot count karna
+        for (int num : nums) {
+            if (num < pivot) {
+                result[left++] = num;
+            } else if (num == pivot) {
+                pivotCount++;
+            }
+        }
+
+        // Pivot values add karna
+        while (pivotCount-- > 0) {
+            result[left++] = pivot;
+        }
+
+        // Dusra loop: Pivot se bade elements add karna
+        for (int num : nums) {
+            if (num > pivot) {
+                result[left++] = num;
+            }
+        }
+
+        return result;
+    }
+
+    // 🔹 **Main Method**
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // User se array ka size lena
+        System.out.print("Enter size of array: ");
+        int n = sc.nextInt();
+
+        int[] nums = new int[n];
+        System.out.println("Enter " + n + " elements:");
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();  // User input
+        }
+
+        // Pivot input lena
+        System.out.print("Enter pivot element: ");
+        int pivot = sc.nextInt();
+
+        // Function call aur output print karna
+        Solution sol = new Solution();
+        int[] result = sol.pivotArray(nums, pivot);
+
+        // Output print
+        System.out.println("Rearranged array: " + Arrays.toString(result));
+
+        sc.close();
+    }
+}
