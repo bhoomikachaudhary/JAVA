@@ -1,0 +1,18 @@
+class Solution {
+    public boolean checkPowersOfThree(int n) {
+        while (n > 0) {
+            if (n % 3 == 2) {
+                return false; // If a remainder of 2 is found, it's not possible
+            }
+            n /= 3; // Reduce n by dividing by 3
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.checkPowersOfThree(12)); // Output: true
+        System.out.println(sol.checkPowersOfThree(91)); // Output: true
+        System.out.println(sol.checkPowersOfThree(21)); // Output: false
+    }
+}
