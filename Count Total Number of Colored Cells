@@ -1,0 +1,65 @@
+class Solution {
+    public long coloredCells(int n) {
+        return 1L + 2L * (long)(n - 1) * n;
+        
+    }
+}
+
+
+or
+
+import java.util.*;
+
+public class InfiniteGridSpread {
+    public static void main(String[] args) {
+        int n = 3; // Example input
+        Set<String> visited = spreadBlueCells(n);
+        printGrid(visited, n);
+    }
+
+    public static Set<String> spreadBlueCells(int n) {
+        Set<String> visited = new HashSet<>();
+        Queue<int[]> queue = new LinkedList<>();
+        
+        // Start with the initial blue cell (0,0)
+        queue.add(new int[]{0, 0});
+        visited.add("0,0");
+
+        // Directions for 4-way movement (left, right, up, down)
+        int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+        while (n-- > 0) {
+            int size = queue.size(); // Process only the current layer of cells
+            for (int i = 0; i < size; i++) {
+                int[] cell = queue.poll();
+                int x = cell[0], y = cell[1];
+
+                for (int[] dir : directions) {
+                    int newX = x + dir[0], newY = y + dir[1];
+                    String key = newX + "," + newY;
+
+                    if (!visited.contains(key)) {
+                        visited.add(key);
+                        queue.add(new int[]{newX, newY});
+                    }
+                }
+            }
+        }
+        return visited;
+    }
+
+    // Helper function to print the grid (for small n)
+    public static void printGrid(Set<String> visited, int n) {
+        int range = n + 1; // Visual range
+        for (int i = -range; i <= range; i++) {
+            for (int j = -range; j <= range; j++) {
+                if (visited.contains(i + "," + j)) {
+                    System.out.print("█ ");
+                } else {
+                    System.out.print(". ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
