@@ -1,0 +1,47 @@
+class Solution {
+    public int[] closestPrimes(int left, int right) {
+        boolean[] isPrime = sieve(right);
+        List<Integer> primes = new ArrayList<>();
+        
+        for (int i = left; i <= right; i++) {
+            if (isPrime[i]) {
+                primes.add(i);
+            }
+        }
+        
+        if (primes.size() < 2) {
+            return new int[]{-1, -1};
+        }
+        
+        int[] minPair = {primes.get(0), primes.get(1)};
+        int minGap = minPair[1] - minPair[0];
+        
+        for (int i = 1; i < primes.size() - 1; i++) {
+            int gap = primes.get(i + 1) - primes.get(i);
+            if (gap < minGap) {
+                minGap = gap;
+                minPair[0] = primes.get(i);
+                minPair[1] = primes.get(i + 1);
+            }
+        }
+        
+        return minPair;
+        }
+    
+    private static boolean[] sieve(int n) {
+        boolean[] isPrime = new boolean[n + 1];
+        Arrays.fill(isPrime, true);
+        isPrime[0] = isPrime[1] = false;
+        
+        for (int i = 2; i * i <= n; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j <= n; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+        
+        return isPrime;
+    }
+        
+}
