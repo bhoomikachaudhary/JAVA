@@ -1,0 +1,30 @@
+class Solution {
+    public int minimumRecolors(String blocks, int k) {
+        int n = blocks.length();
+        int minOps = Integer.MAX_VALUE;
+
+        // Pehle k size ke window ka 'W' count karo
+        int whiteCount = 0;
+        for (int i = 0; i < k; i++) {
+            if (blocks.charAt(i) == 'W') {
+                whiteCount++;
+            }
+        }
+
+        minOps = Math.min(minOps, whiteCount);
+
+        // Sliding Window Apply Karo
+        for (int i = k; i < n; i++) {
+            if (blocks.charAt(i - k) == 'W') {
+                whiteCount--; // Purana leftmost hatao
+            }
+            if (blocks.charAt(i) == 'W') {
+                whiteCount++; // Naya rightmost add karo
+            }
+            minOps = Math.min(minOps, whiteCount);
+        }
+
+        return minOps;
+        
+    }
+}
