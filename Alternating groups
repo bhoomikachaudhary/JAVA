@@ -1,0 +1,37 @@
+class Solution {
+    public int numberOfAlternatingGroups(int[] colors, int k) {
+        int n = colors.length;
+        int count = 0;
+        int validCount = 0;
+
+        // Extend the array logically for circular behavior
+        for (int i = 0; i < k - 1; i++) {
+            if (colors[i] != colors[i + 1]) {
+                validCount++;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            int endIndex = (i + k - 1) % n;
+            int startIndex = (i - 1 + n) % n;
+            
+            // Check the new element entering the window
+            if (i > 0 && colors[(i + k - 2) % n] != colors[endIndex]) {
+                validCount++;
+            }
+
+            // Remove the element leaving the window
+            if (i > 0 && colors[(i - 1 + n) % n] != colors[i]) {
+                validCount--;
+            }
+
+            // If k-1 valid transitions exist, count this as an alternating group
+            if (validCount == k - 1) {
+                count++;
+            }
+        }
+
+        return count;
+        
+    }
+}
