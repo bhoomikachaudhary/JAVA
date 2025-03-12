@@ -1,0 +1,19 @@
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int n = s.length();
+        int left = 0, total = 0;
+        int[] lastSeen = {-1, -1, -1}; // Last index of 'a', 'b', 'c'
+
+        for (int right = 0; right < n; right++) {
+            lastSeen[s.charAt(right) - 'a'] = right; // Current char ka last index update karo
+
+            // Jab bhi teeno characters mile, min(lastSeen) find karo
+            int minIndex = Math.min(lastSeen[0], Math.min(lastSeen[1], lastSeen[2]));
+            if (minIndex != -1) { // Matlab teeno characters mil gaye
+                total += (minIndex + 1);
+            }
+        }
+        return total;
+        
+    }
+}
